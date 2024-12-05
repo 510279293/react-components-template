@@ -8,12 +8,17 @@ const nav = [
   { title: '资源', link: '/resources' },
 ]
 
+const metas = [
+  {name: 'referrer', content: 'no-referrer'}
+]
+
 export default defineConfig({
   outputPath: 'docs-dist',
   themeConfig: {
     name: '@junc/rc',
     nav
   },
+  metas
   // resolve: {
   //   docDirs: [{ type: 'doc', dir: 'docs' }],
   //   atomDirs: [{ type: 'component', dir: 'components' }],

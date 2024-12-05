@@ -1,0 +1,17 @@
+@import '../../style/var.less';
+
+.@{prefix}-with-search-tree{
+  .ant-tree{
+    .ant-tree-treenode, .ant-tree-node-content-wrapper{
+      width: 100%;
+      .title-operate{
+        display: none;
+      }
+      &:hover{
+        .title-operate{
+          display: block;
+        }
+      }
+    }
+  }
+}
