@@ -13,7 +13,7 @@ group:
 
 文件预览组件，基于 antd 和 react-file-viewer 实现
 
-```jsx
+```tsx
 import React, {useState} from "react"
 import { Select } from 'antd';
 import { Preview } from '@junc/rc';
@@ -47,7 +47,7 @@ export default () => {
 
 Preview.Group
 
-```jsx
+```tsx
 import React from "react"
 import { Image } from 'antd';
 import { Preview } from '@junc/rc';
@@ -83,7 +83,7 @@ export default () => {
 ```
 
 结合 antd Upload 文件上传 进行文件预览
-```jsx
+```tsx
 import React, {useState} from 'react';
 import { StarOutlined, UploadOutlined } from '@ant-design/icons';
 import type { UploadProps } from 'antd';

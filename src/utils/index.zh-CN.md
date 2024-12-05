@@ -11,7 +11,7 @@ group:
   order: 5
 ---
 
-```js
+```ts
 const allDateRanges: any = {
   '今天': [dayjs(), dayjs()],
   '昨天': [dayjs().add(-1, 'days'), dayjs().add(-1, 'days')],

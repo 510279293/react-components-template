@@ -16,7 +16,7 @@ group:
 
 左右布局:
 
-```jsx
+```tsx
 import React from "react"
 import { Layout } from "antd"
 import PageSlider from '../PageSlider'
@@ -133,7 +133,7 @@ export default () => {
 ```
 
 上下布局:
-```jsx
+```tsx
 import React from "react"
 import { Layout } from "antd"
 import PageSlider from '../PageSlider'

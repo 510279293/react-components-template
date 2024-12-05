@@ -12,7 +12,7 @@ group:
 ---
 
 InputNumber 范围输入框:
-```jsx
+```tsx
 import React, { useState } from 'react'
 import { Compact } from '@junc/rc'
 
@@ -29,7 +29,7 @@ export default () => {
 ```
 
 InputNumber 范围输入框: 金额按千分位 分割显示:
-```jsx
+```tsx
 import React, { useState } from 'react'
 import { Compact } from '@junc/rc'
 

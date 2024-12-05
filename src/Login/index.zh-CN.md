@@ -15,7 +15,7 @@ group:
 
 ## 登录(组件级)
 账号密码登录
-```jsx
+```tsx
 import { message } from 'antd';
 import { Login } from '@junc/rc';
 import { LoginForm } from '@ant-design/pro-components';
@@ -31,7 +31,7 @@ export default () => (<Login
 ```
 
 手机号登录
-```jsx
+```tsx
 import { message } from 'antd';
 import { Login } from '@junc/rc';
 import { LoginForm } from '@ant-design/pro-components';
@@ -47,7 +47,7 @@ export default () => (<Login
 ```
 
 带 Tab 切换的组合式登录
-```jsx
+```tsx
 import { message } from 'antd';
 import { Login } from '@junc/rc';
 const { AccountForm, PhoneForm, AutoLogin } = Login
@@ -72,7 +72,7 @@ export default () => (<Login
 ```
 
 ## 登录(页面级)
-```jsx
+```tsx
 import { message, Tabs } from 'antd';
 import { LoginFormPage } from '@ant-design/pro-components';
 import { Login } from '@junc/rc';

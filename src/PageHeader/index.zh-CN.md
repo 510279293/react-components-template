@@ -14,7 +14,7 @@ group:
 
 基本配置
 
-```jsx
+```tsx
 import { PageHeader } from '@junc/rc';
 import { MenuProps } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'
@@ -69,7 +69,7 @@ export default () => (<PageHeader
 ```
 
 自定义 Logo
-```jsx
+```tsx
 import { PageHeader } from '@junc/rc';
 import { MenuProps, Image } from 'antd'
 import { QuestionCircleOutlined } from '@ant-design/icons'

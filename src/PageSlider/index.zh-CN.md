@@ -15,7 +15,7 @@ group:
 基本配置
 注意: Slider 要在 Antd 的 Layout 组件中使用
 
-```jsx
+```tsx
 import { Layout } from 'antd'
 import { PageSlider } from '@junc/rc';
 import {

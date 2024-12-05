@@ -13,7 +13,7 @@ group:
 
 基于 Antd Tree 组件开发，组件属性参数请参考 antd Tree 组件
 
-```jsx
+```tsx
 import React, { useState } from 'react'
 import { WithSearchTree } from '@junc/rc'
 const treeData = [
