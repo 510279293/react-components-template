@@ -10,7 +10,6 @@ import {
   SettingOutlined,
   HolderOutlined
 } from '@ant-design/icons';
-import './style/index.less'
 
 interface DragSortWarpProps extends SortableContainerProps {
     warpStyle?: CSSProperties;
@@ -69,7 +68,7 @@ const PopoverTitle = ({onReset, ...rest}: PopoverTitleProps) => (<Row justify="s
 </Row>)
 
 const PopoverContent = ({options, onSortEnd, ...rest}: PopoverContentProps) => {
-    return (<DragSortWarp helperClass="dargging" lockAxis="y" useDragHandle onSortEnd={onSortEnd}>
+    return (<DragSortWarp helperClass="jrc-dargging" lockAxis="y" useDragHandle onSortEnd={onSortEnd}>
         <Checkbox.Group style={{width: 224}} value={getCheckedValue(options as any)} {...rest}>
         {
             (options||[]).map(({label, value}: any, idx) =>

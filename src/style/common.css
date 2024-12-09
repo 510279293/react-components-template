@@ -1,0 +1,17 @@
+/* @tailwind base; */
+
+.jrc-invisible {
+  visibility: hidden
+}
+
+.jrc-flex {
+  display: flex
+}
+
+.jrc-justify-between {
+  justify-content: space-between
+}
+
+.jrc-align-middle {
+  vertical-align: middle
+}

@@ -15,7 +15,7 @@ group:
 ```jsx
 import { Time } from '@junc/rc'
 
-export default () => (<Time time="2023-09-11 18:05:45" />)
+export default () => (<Time time="2024-12-06 13:40:45" />)
 ```
 
 参数用法: interval 参数可设置 setInterval 定时计算的时长
@@ -29,7 +29,7 @@ const Test = () => {
 export default () => (<div>
   我是兄弟组件
   <Test />
-  <Time time="2023-09-12 09:10:45" interval={1} />
+  <Time time="2024-12-06 13:40:45" interval={1} />
 </div>)
 ```
 

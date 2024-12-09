@@ -4,7 +4,7 @@ import {
 
 const IconFont = createFromIconfontCN({
   scriptUrl: [
-    '//at.alicdn.com/t/c/font_4291511_m48ovhx971l.js',
+    '//at.alicdn.com/t/c/font_4291511_zkuor99vee.js',
   ],
 })
 

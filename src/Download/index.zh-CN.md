@@ -90,7 +90,7 @@ import {
   DownloadOutlined
 } from '@ant-design/icons';
 
-const { useDownloadHooks } = Download
+const { useDownloadHook } = Download
 
 const data = {
     '商圈概括': [
@@ -117,7 +117,7 @@ const data = {
     ]
   }
 export default () => {
-  const { aprops, download } = useDownloadHooks()
+  const { aprops, download } = useDownloadHook()
   const [messageApi, contextHolder] = message.useMessage()
   const onDownload = (e) => {
     e.preventDefault()
@@ -136,4 +136,4 @@ export default () => {
 | data | 下载数据 | Record<string, any[]>; |  |  |
 | href | 下载的远程链接接 | string |  |  |
 | fileName | 下载的文件名(data 模式生效) | string |  |  |
-
+| useDownloadHook | Download 组件的Hook | () => {aprops, download: ({data, fileName, href}: DownloadProps) => void} |  |  |

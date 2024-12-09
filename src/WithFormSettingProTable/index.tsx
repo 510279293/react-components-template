@@ -3,26 +3,38 @@ import FormDragSetting, { getFormDragSettingOptions, setColumnsByOptions } from 
 import { ColumnsState, ParamsType, ProTable, ProTableProps } from "@ant-design/pro-components";
 import { cloneDeep } from "lodash";
 import { Table } from "antd";
+// import { useModalHook, useProTableHook } from "../hooks";
 
 const TableSummary: FC<any> = ({options, data}) => {
   return (<Table.Summary fixed>
               <Table.Summary.Row>
-              <Table.Summary.Cell key="总计" align='center' index={0}>总计</Table.Summary.Cell>
                 {
-                  options?.filter((item: any) => item.show).map((v: any, idx: number) => <Table.Summary.Cell key={v.param} align='center' index={idx+1}>{data[v.param]||' '}</Table.Summary.Cell> )
+                  options?.filter((item: any) => item.show).map((v: any, idx: number) => <Table.Summary.Cell key={v.param} index={idx}>{ idx !== 0 ? data[v.param] : '总计'}</Table.Summary.Cell> )
                 }
               </Table.Summary.Row>
           </Table.Summary>)
 }
 
+// type ActionType = 'add' | 'update' | 'del' | any;
+// type OperateType = (action: ActionType, record?: any) => Promise<any>;
 
-type WithFormSettingProTableProps<T> = {
+// interface ToolbarProps extends Omit<ListToolBarProps, 'actions'> {
+//     actions?: ReactNode | (({operate, hasPermission, selectedRowKeys}: {operate: OperateType, hasPermission: (code?: any) => boolean, selectedRowKeys: Key[]}) => React.ReactNode[]);
+// }
+
+export type WithFormSettingProTableProps<T> = {
   settingOptions?: any[];
   searchState?: { persistenceKey: string, persistenceType: 'localStorage' | 'sessionStorage'};
   summary?: (options: any[], data: any) => any;
+  // columns: ProFormColumnsType<any, any>[] | (({operate, hasPermission}: {operate: OperateType, hasPermission?: (code?: any) => boolean}) => ProFormColumnsType<any, any>[]);
+  // toolbar?: ToolbarProps;
+  // onSave?: (action: ActionType, record?: any, values?: any) => void;
+  // children?: React.ReactNode;
+  // modalProps?: ModalFormProps;
+  // hasPermission?: (code?: any) => boolean;
 } & ProTableProps<Record<string, T>,ParamsType>
 
-const useWithFormSettingProTablehooks = ({columns, searchState}: any) => {
+const useWithFormSettingProTablehook = ({columns, searchState}: any) => {
   const { persistenceKey, persistenceType } = searchState || {}
   const columnsBack = cloneDeep(columns)
 
@@ -70,10 +82,11 @@ const useWithFormSettingProTablehooks = ({columns, searchState}: any) => {
 }
 
 const getSummaryOptionsByColumns = (columns: any) => {
-  return (columns||[])?.filter((column: any) => !column.hiddenInTable).map((v: any) => ({param: v.dataIndex, show: true}))
+  const summaryOptions = columns.filter((column: any) => !(column.hideInTable === true)).map((v: any) => ({param: v.dataIndex, show: true}))
+  return summaryOptions
 }
 
-const useProTabSummaryHooks = ({originRequest, columns, columnsState}: any) => {
+const useProTabSummaryHook = ({columns, columnsState, ...restProps}: any) => {
   const [summaryOptions, setSummaryOptions] = useState([])
   const [summaryData, setSummaryData] = useState(null)
 
@@ -94,10 +107,11 @@ const useProTabSummaryHooks = ({originRequest, columns, columnsState}: any) => {
       const rightFixedOptions = allSortOptions?.filter((v: any) => v.fixed === 'right')
       return [...leftFixedOptions, ...noFixedOptions, ...rightFixedOptions]
     }
+    return getSummaryOptionsByColumns(columns)
   }
 
   const request = async (...args: any[]) => {
-    const { summaryData, ...rest } = await originRequest?.call(null, ...args) as any
+    const { summaryData, ...rest } = await restProps?.request?.call(null, ...args) as any
     setSummaryData(summaryData)
     return rest
   }
@@ -118,12 +132,14 @@ const useProTabSummaryHooks = ({originRequest, columns, columnsState}: any) => {
 
 }
 
-const WithFormSettingProTable: <T>(props: WithFormSettingProTableProps<T>) => ReactNode = ({columns, searchState, columnsState, request: originRequest, summary, ...restProps}) => {
+
+function useWithFormSettingProTableHook<T>(props: WithFormSettingProTableProps<T>) {
+  const {searchState, columnsState} = props
   const {
     ownColumns,
     settingOptions,
     onFormSettingChange,
-  } = useWithFormSettingProTablehooks({columns, searchState})
+  } = useWithFormSettingProTablehook(props)
 
   const {
     request,
@@ -131,32 +147,51 @@ const WithFormSettingProTable: <T>(props: WithFormSettingProTableProps<T>) => Re
     setSummaryOptions,
     summaryData,
     getSummaryOptions
-  } = useProTabSummaryHooks({originRequest, columns, columnsState})
+  } = useProTabSummaryHook(props)
+
+  const calcSummaryOptions = () => {
+    const options: any = [{param: '总计', show: true}]
+    if (props.expandable && props.rowSelection) {
+      return [...options, {param: undefined, show: true}, ...(summaryOptions||[])]
+    }
+    if (props.expandable || props.rowSelection) {
+      return [...options, ...(summaryOptions||[])]
+    }
+    return [...(summaryOptions||[])]
+  }
 
   const ownProps = {
-    columns: ownColumns as any,
-    summary: summary ? () => summary(summaryOptions, summaryData) : summaryData ? () => <TableSummary options={summaryOptions} data={summaryData} /> : undefined,
-    request: originRequest ? request : undefined,
+    ...props,
+    summary: props?.summary ? () => props?.summary?.(calcSummaryOptions(), summaryData) : summaryData ? () => <TableSummary options={calcSummaryOptions()} data={summaryData} /> : undefined,
+    request: props?.request ? request : undefined,
     searchState,
-    columnsState: typeof columnsState === 'object' ? {
+    columnsState: ((props.options||{})?.setting) && (typeof columnsState === 'object' || summaryData) ? {
       ...columnsState,
       onChange: (value: Record<string, ColumnsState>) => {
         const columnState = getSummaryOptions(value)
         setSummaryOptions(columnState as any)
       }
     } : columnsState,
-    ...restProps
+    search: {
+      optionRender: (searchConfig: any, formProps: any, dom: any) => [
+        ...dom.reverse(),
+        <FormDragSetting key="drag" options={settingOptions as any} onChange={onFormSettingChange} />,
+      ],
+    },
+    columns: ownColumns as any,
   }
 
+  return ownProps
+}
+
+const WithFormSettingProTable: <T>(props: WithFormSettingProTableProps<T>) => ReactNode = (props) => {
+
+  const ownProps = useWithFormSettingProTableHook(props)
+  console.log('----------ownprops->', ownProps)
+
   return (<ProTable
-            search={{
-              optionRender: (searchConfig, formProps, dom) => [
-                ...dom.reverse(),
-                <FormDragSetting key="drag" options={settingOptions as any} onChange={onFormSettingChange} />,
-              ],
-            }}
-            {...ownProps}
-          />)
+      {...ownProps}
+    />)
 }
 
 

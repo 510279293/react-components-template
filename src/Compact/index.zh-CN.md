@@ -18,6 +18,7 @@ import { Compact } from '@junc/rc'
 
 export default () => {
   return (<Compact 
+    warpStyle={{width: 180}}
     defaultValue={[12, 34]} 
     min={10}
     max={1000000}
@@ -35,6 +36,7 @@ import { Compact } from '@junc/rc'
 
 export default () => {
   return (<Compact 
+    warpStyle={{width: 240}}
     defaultValue={[12, 34]} 
     min={10}
     max={1000000}
@@ -54,6 +56,7 @@ export default () => {
 <!-- prettier-ignore -->
 | 参数 | 说明 | 类型 | 默认值 | 版本 |
 | --- | --- | --- | --- | --- |
+| warpStyle | Compact 组件的样式 | CSSProperties |  |  |
 | width | Compact 组件的宽 | number\|string | 180 |  |
 | value | - | InputNumberProps['value'][] |  |  |
 | defaultVaue | - | InputNumberProps['defaultVaue'][] |  | 

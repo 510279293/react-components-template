@@ -31,7 +31,7 @@ function getFileName(fileName: string) {
 }
 
 
-function useDownloadHooks () {
+function useDownloadHook () {
   const [aprops, setAprops] = useState({download: '', href: ''})
 
   const download = ({data, fileName, href}: DownloadProps) => {
@@ -61,16 +61,16 @@ type DownloadProps = {
 }
 
 type DownloadStaticProps = {
-  useDownloadHooks?: any;
+  useDownloadHook?: any;
 }
 
 const Download: FC<DownloadProps> & DownloadStaticProps = ({data, href, fileName, children, ...restProps}) => {
-  const { aprops, download } = useDownloadHooks()
+  const { aprops, download } = useDownloadHook()
 
   return (<a {...aprops} {...restProps} onClick={() => download({fileName, href, data})}>{children || '下载'}</a>)
 }
 
-Download.useDownloadHooks = useDownloadHooks
+Download.useDownloadHook = useDownloadHook
 
 export default Download
 

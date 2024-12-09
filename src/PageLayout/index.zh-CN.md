@@ -1,6 +1,6 @@
 ---
 category: Components
-title: PageLayout
+title: PageLayout(废弃)
 subtitle: 组件
 cover: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*DfTMRYSDngEAAAAAAAAAAAAADrJ8AQ/original
 coverDark: https://mdn.alipayobjects.com/huamei_7uahnr/afts/img/A*Y5pcQLplFu4AAAAAAAAAAAAADrJ8AQ/original

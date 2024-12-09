@@ -7,6 +7,7 @@ type InputRangeStaticProps = {
 
 type InputRangeProps = {
   width?: number;
+  warpStyle?: React.CSSProperties;
   value?: InputNumberProps['value'][];
   defaultValue?: InputNumberProps['defaultValue'][];
   placeholder?: InputProps['placeholder'][];
@@ -14,14 +15,18 @@ type InputRangeProps = {
   onBlur?: (val: InputNumberProps['defaultValue'][]) => void;
 } & InputProps & InputNumberProps & InputRangeStaticProps
 
-const InputNumberRange = ({value, defaultValue, placeholder, onChange, width, ...rest}: InputRangeProps) => {
+const InputNumberRange = ({value, defaultValue, placeholder, disabled, warpStyle, onChange, ...rest}: InputRangeProps) => {
   const valRef = useRef<any>(value||defaultValue)
-  return (<Space.Compact className="ant-input" style={{width: width||180, padding: 0}}>
+  return (<Space.Compact 
+      block 
+      className={`ant-input ant-input-outlined css-var-rcbl ant-input-css-var ant-input${disabled ? '-disabled' : ''}`}
+      style={{padding: 0, ...warpStyle}}
+      >
       <InputNumber
         style={{
           textAlign: 'center',
+          width: 'calc(50% - 15px)',
         }}
-        bordered={false}
         controls={false}
         value={value?.[0]}
         defaultValue={defaultValue?.[0]}
@@ -30,6 +35,7 @@ const InputNumberRange = ({value, defaultValue, placeholder, onChange, width, ..
           valRef.current = [val, valRef.current?.[1]]
           onChange?.(valRef.current)
         }}
+        bordered={false}
         {...rest}
       />
       <Input
@@ -38,7 +44,6 @@ const InputNumberRange = ({value, defaultValue, placeholder, onChange, width, ..
           borderLeft: 0,
           borderRight: 0,
           pointerEvents: 'none',
-          backgroundColor: '#fff'
         }}
         placeholder="~"
         disabled
@@ -47,8 +52,8 @@ const InputNumberRange = ({value, defaultValue, placeholder, onChange, width, ..
       <InputNumber
         style={{
           textAlign: 'center',
+          width: 'calc(50% - 15px)',
         }}
-        bordered={false}
         controls={false}
         value={value?.[1]}
         defaultValue={defaultValue?.[1]}
@@ -57,6 +62,7 @@ const InputNumberRange = ({value, defaultValue, placeholder, onChange, width, ..
           valRef.current = [valRef.current?.[0], val ]
           onChange?.(valRef.current)
         }}
+        bordered={false}
         {...rest}
       />
   </Space.Compact>)

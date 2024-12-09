@@ -17,13 +17,14 @@ group:
 import React, { useState } from 'react'
 import { TreeSelect, Table } from 'antd'
 import { WithFormSettingProTable } from '@junc/rc'
+import { ModalForm, ProFormText, ProFormTextArea, ProFormRadio, ProFormDigit } from '@ant-design/pro-form';
 
-const columnsFn: (operate?: Function) => ProColumns<TableListItem>[] = (operate) => {
+const columnsFn: ({operate}: any) => ProColumns<TableListItem>[] = ({operate}) => {
   return [
     {
         title: '姓名',
-        dataIndex: 'contactsName',
-        key: 'contactsName',
+        dataIndex: 'name',
+        key: 'name',
         width: 100,
         order: 7,
         fixed: 'left',
@@ -46,8 +47,8 @@ const columnsFn: (operate?: Function) => ProColumns<TableListItem>[] = (operate)
     },
     {
         title: '手机号',
-        dataIndex: 'mobilePhoneNumber',
-        key: 'mobilePhoneNumber',
+        dataIndex: 'phone',
+        key: 'phone',
         width: 180,
         order: 6,
     },
@@ -148,22 +149,36 @@ const columnsFn: (operate?: Function) => ProColumns<TableListItem>[] = (operate)
         fieldProps: { allowEmpty: [true, true]},
         valueType: 'dateRange',
         render: (text: any, record: any) => `${record.updateTime||'-'}`
-    }
+    },
+    {
+        title: '操作',
+        key: 'option',
+        valueType: 'option',
+        width: 100,
+        fixed: 'right',
+        render: (text, record) => [
+            true ? <a key="edit" onClick={() => operate?.('update', record)}>编辑</a> : null,
+            true ? <a key="del" onClick={() => operate?.('del', record)}>删除</a> : null,
+        // <DragHandle key="drag" /> 
+        ],
+    },
   ]
 }
 
 const dataSource = [
   {
     id: 1,
-    contactsName: 'aaaa',
-    dingNumber: 'xxxx',
-    num: 23
+    name: 'aaaa',
+    phone: 'xxxx',
+    email: 23,
+    num: 1,
   },
   {
     id: 2,
-    contactsName: 'bbbb',
-    dingNumber: 'xxxx',
-    num: 45
+    name: 'bbbb',
+    phone: 'xxxx',
+    email: 45,
+    num: 2
   },
 ]
 
@@ -182,9 +197,8 @@ const request = async () => {
 const TableSummary = ({options, data}) => {
   return (<Table.Summary fixed>
               <Table.Summary.Row>
-              <Table.Summary.Cell key="总计" align='center' index={0}>总计</Table.Summary.Cell>
                 {
-                  options?.filter((item: any) => item.show).map((v: any, idx: number) => <Table.Summary.Cell key={v.param} align='center' index={idx+1}>{data[v.param]}</Table.Summary.Cell> )
+                  options?.filter((item: any) => item.show).map((v: any, idx: number) => <Table.Summary.Cell key={v.param} index={idx}>{ idx !== 0 ? data[v.param] : '总计'}</Table.Summary.Cell> )
                 }
               </Table.Summary.Row>
           </Table.Summary>)
@@ -192,24 +206,25 @@ const TableSummary = ({options, data}) => {
 
 export default () => {
   return (<WithFormSettingProTable<TableListItem>
-              // scroll={{x: 1800}}
-              scroll={{x: 'max-content'}}
-              columns={columnsFn(() => null)}
-              request={request}
-              options={{reload: false, density: false}}
-              toolbar={{
-                  actions: [],
-              }}
-              rowKey="id"
-              summary={(options, data) => <TableSummary options={options} data={data||{}} />}
-              rowSelection={{
-                    preserveSelectedRowKeys: true,
-                    columnWidth: '46px',
-              }}
-              pagination={{defaultPageSize: 10}}
-              columnsState={{ persistenceKey: 'customer/contact', persistenceType: 'localStorage'}}
-              searchState={{ persistenceKey: 'customer/contact:searchState', persistenceType: 'localStorage' }}
-          />)
+            // scroll={{x: 1800}}
+            scroll={{x: 'max-content'}}
+            columns={columnsFn({})}
+            request={request}
+            options={{reload: false, density: false}}
+            toolbar={{
+                actions: [],
+            }}
+            rowKey="id"
+            summary={(options, data) => <TableSummary options={options} data={data||{}} />}
+            rowSelection={{
+                  preserveSelectedRowKeys: true,
+                  columnWidth: '46px',
+            }}
+            pagination={{defaultPageSize: 10}}
+            columnsState={{ persistenceKey: 'customer/contact', persistenceType: 'localStorage'}}
+            searchState={{ persistenceKey: 'customer/contact:searchState', persistenceType: 'localStorage' }}
+          >
+          </WithFormSettingProTable>)
 }
 ```
 ### WithFormSettingProTable props

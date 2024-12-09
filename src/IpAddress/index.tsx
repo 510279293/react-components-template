@@ -15,6 +15,7 @@ const ipv4Arr = new Array(4).fill(0)
 const ipv6Arr = new Array(8).fill(0)
 
 const Dot = () => <Badge color="#252b3a" style={{display: 'flex', alignItems: 'center', transform: 'scale(0.6)'}} />
+// const Dot = () => <Input color="#252b3a" style={{display: 'flex', alignItems: 'center', transform: 'scale(0.6)'}} />
 const Dotv6 = () => <span style={{display: 'flex', alignItems: 'center', marginBottom: 2}}>:</span>
 
 type Ipv4Props = {
@@ -90,7 +91,8 @@ const Ipv4Address = ({value, defaultValue, disabled, onChange}: CommonIpAddressP
   const inputMaps: any = {}
   return (<Space.Compact
     style={{width: 200, padding: 0}}
-    className={`ant-input ant-input${disabled ? '-disabled' : ''}`}
+    // className={`ant-input ant-input${disabled ? '-disabled' : ''}`}
+    className={`ant-input ant-input-outlined css-var-rcbl ant-input-css-var ant-input${disabled ? '-disabled' : ''}`}
   >
     {
       ipv4Arr.map((v: any, i: number) => {
@@ -123,7 +125,8 @@ const Ipv6Address = ({value, defaultValue, disabled, onChange}: CommonIpAddressP
   const inputMaps: any = {}
   return (<Space.Compact
     style={{width: 400, padding: 0}}
-    className={`ant-input ant-input${disabled ? '-disabled' : ''}`}
+    // className={`ant-input ant-input${disabled ? '-disabled' : ''}`}
+    className={`ant-input ant-input-outlined css-var-rcbl ant-input-css-var ant-input${disabled ? '-disabled' : ''}`}
   >
     {
       ipv6Arr.map((v: any, i: number) => {
