@@ -11,7 +11,7 @@ interface ToolbarProps extends Omit<ListToolBarProps, 'actions'> {
     actions?: ReactNode | (({operate, hasPermission, selectedRowKeys}: {operate: OperateType, hasPermission: (code?: any) => boolean, selectedRowKeys: Key[]}) => React.ReactNode[]);
 }
 // interface 
-type ProTableModalFormProps<T> = {
+export type ProTableModalFormProps<T> = {
     columns: ProFormColumnsType<any, any>[] | (({operate, hasPermission}: {operate: OperateType, hasPermission?: (code?: any) => boolean}) => ProFormColumnsType<any, any>[]);
     toolbar?: ToolbarProps;
     onSave?: (action: ActionType, record?: any, values?: any) => void;

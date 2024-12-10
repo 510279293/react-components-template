@@ -16,4 +16,24 @@
     &-dargging{
         z-index: 20001;
     }
+    &-preview-group{
+        height: 100%;
+        display: flex;
+        align-items: center;
+        .pg-viewer-wrapper{
+            min-width: 760px;
+            &::-webkit-scrollbar {
+                width: 0;
+            }
+            .pg-driver-view{
+                display: flex;
+            }
+            .pdf-canvas{
+                width: 100%;
+                canvas{
+                    min-width: 760px;
+                }
+            }
+        }
+    }
 }

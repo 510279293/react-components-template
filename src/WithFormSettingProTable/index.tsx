@@ -187,7 +187,6 @@ function useWithFormSettingProTableHook<T>(props: WithFormSettingProTableProps<T
 const WithFormSettingProTable: <T>(props: WithFormSettingProTableProps<T>) => ReactNode = (props) => {
 
   const ownProps = useWithFormSettingProTableHook(props)
-  console.log('----------ownprops->', ownProps)
 
   return (<ProTable
       {...ownProps}

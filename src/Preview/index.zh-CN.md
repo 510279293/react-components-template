@@ -176,7 +176,7 @@ const App: React.FC = () => {
         onVisibleChange: setVisible,
         imageRender: (_, {current}: any) => {
           const currentSrc = items[current]
-          return <Preview src={currentSrc} />
+          return <div className='jrc-preview-group'><Preview src={currentSrc} /></div>
         },
         toolbarRender: () => null,
       }}

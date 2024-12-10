@@ -4,8 +4,6 @@ import { imgUrlReg, docUrlReg, pptUrlReg, pdfUrlReg, excelUrlReg } from '../RegE
 // @ts-ignore
 import FileViewer from 'react-file-viewer';
 
-import './style/index.less'
-
 const ErrorComponent = () => {
   return (<div>对不起，发生了错误</div>)
 }
@@ -23,7 +21,7 @@ type PreviewProps = {
 
 const Preview: FC<PreviewProps> & PreviewStaticProps = ({src, ...restProps}) => {
   if (imgUrlReg.test(src)) {
-    return <img src={src} />
+    return <Image preview={false} src={src} {...restProps} />
   }
   if (docUrlReg.test(src)) {
     return <FileViewer fileType={'docx'} filePath={src} unsupportedComponent={UnsupportedComponent} errorComponent={ErrorComponent} {...restProps} />
@@ -56,11 +54,13 @@ const PreviewGroup: FC<PreviewGroupProps> = ({items, children, ...restProps}) =>
   return (<Image.PreviewGroup
     items={items}
     preview={{
-      imageRender: (_, {current}: any) => {
+      imageRender: (dom, {current}: any) => {
         const currentSrc = items[current]
-        return <Preview src={currentSrc} />
+        if (imgUrlReg.test(currentSrc))
+          return dom
+        return <div className='jrc-preview-group'><Preview src={currentSrc} /></div>
       },
-      toolbarRender: () => null,
+      toolbarRender: (dom, {image}) => imgUrlReg.test(image?.url) ? dom : null,
     }}
     {...restProps}
   >

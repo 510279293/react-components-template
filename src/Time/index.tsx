@@ -8,7 +8,7 @@ type TimeProps = {
   interval?: number | boolean;
 }
 
-const useRelativeTime = (time: TimeProps['time'], interval?: TimeProps['interval']) => {
+const useRelativeTimeHook = (time: TimeProps['time'], interval?: TimeProps['interval']) => {
   const [val, setVal] = useState((dayjs(time) as any).fromNow())
   const loop = () => setInterval(() => setVal((dayjs(time) as any).fromNow()), (typeof interval === 'number' && interval) ? interval * 1000 : 60 * 1000)
 
@@ -26,10 +26,10 @@ const useRelativeTime = (time: TimeProps['time'], interval?: TimeProps['interval
 }
 
 const Time = ({time, interval}: TimeProps) => {
-  const { val } = useRelativeTime(time, interval)
+  const { val } = useRelativeTimeHook(time, interval)
   return val
 }
 
-Time.useRelativeTime = useRelativeTime
+Time.useRelativeTime = useRelativeTimeHook
 
 export default Time

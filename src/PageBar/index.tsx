@@ -13,7 +13,7 @@ type HistoryItem = {
     timestamp?: number
 }
 
-function useRouteBarHook() {
+function usePageBarHook() {
     const location = useLocation()
     const [historyList, setHistoryList] = useState<HistoryItem[]>([])
     const { pathname, search, hash } = location
@@ -65,7 +65,7 @@ function useRouteBarHook() {
 
 function PageBar() {
     const navigate = useNavigate()
-    const { fullPath, historyList, delHistoryList } = useRouteBarHook()
+    const { fullPath, historyList, delHistoryList } = usePageBarHook()
     
     return (<Tabs 
                 items={historyList} 
@@ -81,4 +81,5 @@ function PageBar() {
             />)
 }
 
+PageBar.usePageBarHook = usePageBarHook
 export default PageBar

@@ -36,9 +36,6 @@ const illegal = new RegExp(/#|[~～]|[!！]|[?？]|\.\.|--|__|－|＿|※|▲|�
 // export const pwdReg = new RegExp(/(^([a-zA-Z\d+]+)$)/) // 英文、数字或组合
 const pwdReg = new RegExp(/(?!^(\d+|[a-zA-Z]+|[!@#$%^&.*_?]+)$)^[\w!@#$%^&.*_?]{6,20}$/) // 密码至少包含英文、数字、符号中的两种
 const homePageReg = /(http|ftp|https):\/\/[\w\-_]+(\.[\w\-_]+)+([\w\-\.,@?^=%&amp;:/~\+#]*[\w\-\@?^=%&amp;/~\+#])?/ // 官网正则判断
-const mobileNumberMask = (str: string) => (str||'').replace(/(\d{3})\d*(\d{4})/, '$1****$2') // 手机号脱敏
-const idCardNumberMask = (str: string) => (str||'').replace("(?<=\\w{3})\\w(?=\\w{4})","*") // 身份证号脱敏
-const emailMask = (str: string) => str.replace("(\\w+)\\w{5}@(\\w+)","$1***@$2") // 邮箱脱敏
 
 // ip地址正则
 const ipv4ItemReg = new RegExp(/^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)/)  // ipv4 地址每组的校验
